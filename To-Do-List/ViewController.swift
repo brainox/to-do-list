@@ -34,7 +34,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tasks.insert(name, at: 0)
         let indexPath:IndexPath = IndexPath(row: 0, section: 0)
         table.insertRows(at: [indexPath], with: .automatic)
-        save()
+        self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
     //MARK:-Datasource
@@ -50,7 +50,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //MARK:-TableView Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("\(tasks[indexPath.row])")
+        self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
     //MARK:-Setting Editing
