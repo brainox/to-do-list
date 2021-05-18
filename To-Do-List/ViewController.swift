@@ -9,9 +9,10 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var tasks: [String] = []
-    var selectedRow: Int = -1
-
+    var tasks:[String] = []
+    var selectedRow:Int = -1
+    var newRowText:String = ""
+    
     @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
@@ -25,13 +26,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.navigationItem.leftBarButtonItem = editButtonItem
         load()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if selectedRow == -1 {
+            return
+        }
+        tasks[selectedRow] = newRowText
+        if newRowText == "" {
+            tasks.remove(at: selectedRow)
+        }
+        table.reloadData()
+        save()
+    }
+    
     //MARK:- Adding tasks to the table
     @objc func addNote() {
         if table.isEditing{
             return
         }
-        let name: String = "Item\(tasks.count + 1)"
+        let name: String = ""
         tasks.insert(name, at: 0)
         let indexPath:IndexPath = IndexPath(row: 0, section: 0)
         table.insertRows(at: [indexPath], with: .automatic)
@@ -39,6 +53,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
+
     //MARK:-Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
@@ -54,10 +69,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
-    
+    //MARK:- Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailView:DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
+        detailView.masterView = self
         detailView.setText(_text: tasks[selectedRow])
     }
     
@@ -73,10 +89,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         save()
     }
     
+    //MARK:- Saving to UserDefaults
     func  save() {
         UserDefaults.standard.setValue(tasks, forKey: "todo")
     }
     
+    //MARK:- Loading the saved data from the UserDefaults
     func load() {
         if let loadedTask: [String] = UserDefaults.standard.value(forKey: "todo") as? [String] {
             tasks = loadedTask
