@@ -18,7 +18,15 @@ class ViewController: UIViewController, UITableViewDataSource {
         table.dataSource = self
         self.title = "To-Do"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
+        self.navigationItem.rightBarButtonItem = addButton
+    }
+    
+    @objc func addNote() {
+        let name: String = "Item\(tasks.count + 1)"
+        tasks.insert(name, at: 0)
+        let indexPath:IndexPath = IndexPath(row: 0, section: 0)
+        table.insertRows(at: [indexPath], with: .automatic)
     }
     
     //MARK:-Datasource
