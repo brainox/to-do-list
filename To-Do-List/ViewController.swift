@@ -16,6 +16,8 @@ class ViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         table.dataSource = self
+        self.title = "To-Do"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
 
     }
     
