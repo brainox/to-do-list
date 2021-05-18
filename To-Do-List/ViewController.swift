@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var tasks: [String] = []
 
@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         table.dataSource = self
+        table.delegate = self
         self.title = "To-Do"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
@@ -45,6 +46,11 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         cell.textLabel?.text = tasks[indexPath.row]
         return cell
+    }
+    
+    //MARK:-TableView Delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(tasks[indexPath.row])")
     }
     
     //MARK:-Setting Editing
