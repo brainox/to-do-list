@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource {
     
-    var tasks: [String] = ["item 1", "item 2", "item 3"]
+    var tasks: [String] = []
 
     @IBOutlet weak var table: UITableView!
     
@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNote))
         self.navigationItem.rightBarButtonItem = addButton
         self.navigationItem.leftBarButtonItem = editButtonItem
+        load()
     }
 
     //MARK:- Adding tasks to the table
@@ -32,6 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         tasks.insert(name, at: 0)
         let indexPath:IndexPath = IndexPath(row: 0, section: 0)
         table.insertRows(at: [indexPath], with: .automatic)
+        save()
     }
     
     //MARK:-Datasource
@@ -54,6 +56,20 @@ class ViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         tasks.remove(at: indexPath.row)
         table.deleteRows(at: [indexPath], with: .fade)
+        save()
     }
+    
+    func  save() {
+        UserDefaults.standard.setValue(tasks, forKey: "todo")
+    }
+    
+    func load() {
+        if let loadedTask: [String] = UserDefaults.standard.value(forKey: "todo") as? [String] {
+            tasks = loadedTask
+            table.reloadData()
+        }
+    }
+    
+    
 }
 
