@@ -15,7 +15,11 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "To-Do Details"
+//        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .never
         textView.text = text
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
