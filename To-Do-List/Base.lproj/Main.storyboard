@@ -53,7 +53,7 @@
         <!--Todo-->
         <scene sceneID="IG0-K0-HA8">
             <objects>
-                <viewController title="Todo" id="ICu-iu-QXL" sceneMemberID="viewController">
+                <viewController title="Todo" id="ICu-iu-QXL" customClass="DetailViewController" customModule="To_Do_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L3K-M4-XxF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,6 +77,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Sym-vq-B1r"/>
+                    <connections>
+                        <outlet property="textView" destination="qZj-GS-Wxq" id="iGl-iz-zvi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u08-7B-HTN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
