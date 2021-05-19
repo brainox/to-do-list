@@ -10,8 +10,8 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     
-    var text:String = ""
-    var masterView:ViewController!
+    var text: String = ""
+    var masterView: ViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +23,10 @@ class DetailViewController: UIViewController {
         textView.becomeFirstResponder()
     }
     
-    func setText(_text: String) {
-        text = _text
+    func setText(textv: String) {
+        text = textv
         if isViewLoaded {
-            textView.text = _text
+            textView.text = textv
         }
     }
     

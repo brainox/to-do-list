@@ -74,7 +74,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let detailView:DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
         detailView.masterView = self
-        detailView.setText(_text: tasks[selectedRow])
+        detailView.setText(textv: tasks[selectedRow])
     }
     
     //MARK:-Setting Editing
