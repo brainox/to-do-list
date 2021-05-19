@@ -10,7 +10,7 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     
-    var text: String = ""
+    var text:String = ""
     var masterView: ViewController!
     
     override func viewDidLoad() {

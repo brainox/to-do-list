@@ -54,7 +54,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
-
     //MARK:-Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
@@ -95,14 +94,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         UserDefaults.standard.setValue(tasks, forKey: "todo")
     }
     
-    //MARK:- Loading the saved data from the UserDefaults
+    // MARK: - Loading the saved data from the UserDefaults
     func load() {
         if let loadedTask: [String] = UserDefaults.standard.value(forKey: "todo") as? [String] {
             tasks = loadedTask
             table.reloadData()
         }
     }
-    
-    
 }
-
