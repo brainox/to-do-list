@@ -33,7 +33,6 @@ class DetailViewController: UIViewController {
         }
     }
     
-    // MARK: - ViewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         mainView.newRowText = textView.text

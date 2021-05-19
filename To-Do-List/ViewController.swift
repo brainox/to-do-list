@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = editButtonItem
         load()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -43,7 +43,6 @@ class ViewController: UIViewController {
         save()
     }
     
-    // MARK: - Adding tasks to the table
     @objc func addNote() {
         if table.isEditing {
             return
@@ -56,7 +55,6 @@ class ViewController: UIViewController {
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
-    // MARK: - Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailView: DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
@@ -64,27 +62,23 @@ class ViewController: UIViewController {
         detailView.setText(textv: tasks[selectedRow])
     }
     
-    // MARK: - Setting Editing
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: animated)
     }
     
     func getStarted() {
-        
-            let alert = UIAlertController(title: "Welcome", message: "Swipe left to delete", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default,
-                                          handler: { (action) in alert.dismiss(animated: true, completion: nil)
-            }))
-            self.present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Welcome", message: "Swipe left to delete.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default,
+                                      handler: { (action) in alert.dismiss(animated: true, completion: nil)
+                                      }))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Saving to UserDefaults
     func  save() {
         UserDefaults.standard.setValue(tasks, forKey: "todo")
     }
     
-    // MARK: - Loading the saved data from the UserDefaults
     func load() {
         if let loadedTask: [String] = UserDefaults.standard.value(forKey: "todo") as? [String] {
             tasks = loadedTask
