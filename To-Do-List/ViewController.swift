@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController {
     
     var tasks: [String] = []
     var selectedRow: Int = -1
@@ -54,22 +54,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
-    // MARK: - Datasource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = tasks[indexPath.row]
-        return cell
-    }
-    
-    // MARK: - TableView Delegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "detail", sender: nil)
-    }
-    // MARK: - Prepare for segue
+        // MARK: - Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailView: DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
@@ -82,13 +67,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: animated)
     }
-    // MARK: - Deleting a task from the table
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        tasks.remove(at: indexPath.row)
-        table.deleteRows(at: [indexPath], with: .fade)
-        save()
-    }
-    
+   
     // MARK: - Saving to UserDefaults
     func  save() {
         UserDefaults.standard.setValue(tasks, forKey: "todo")
@@ -100,5 +79,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tasks = loadedTask
             table.reloadData()
         }
+    }
+}
+
+// MARK: - UITableViewDataSource methods
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        cell.textLabel?.text = tasks[indexPath.row]
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate methods
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "detail", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        tasks.remove(at: indexPath.row)
+        table.deleteRows(at: [indexPath], with: .fade)
+        save()
     }
 }
