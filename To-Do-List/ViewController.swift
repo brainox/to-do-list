@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getStarted()
         table.dataSource = self
         table.delegate = self
         self.title = "To-Do"
@@ -27,9 +28,10 @@ class ViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = editButtonItem
         load()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if selectedRow == -1 {
             return
         }
@@ -54,7 +56,7 @@ class ViewController: UIViewController {
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
-        // MARK: - Prepare for segue
+    // MARK: - Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let detailView: DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
@@ -67,7 +69,16 @@ class ViewController: UIViewController {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: animated)
     }
-   
+    
+    func getStarted() {
+        
+            let alert = UIAlertController(title: "Welcome", message: "Swipe left to delete", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default,
+                                          handler: { (action) in alert.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - Saving to UserDefaults
     func  save() {
         UserDefaults.standard.setValue(tasks, forKey: "todo")
