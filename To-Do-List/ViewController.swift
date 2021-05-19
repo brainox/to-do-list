@@ -9,9 +9,9 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var tasks:[String] = []
-    var selectedRow:Int = -1
-    var newRowText:String = ""
+    var tasks: [String] = []
+    var selectedRow: Int = -1
+    var newRowText: String = ""
     
     @IBOutlet weak var table: UITableView!
     
@@ -34,27 +34,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         tasks[selectedRow] = newRowText
-        if newRowText == "" {
+        if newRowText.isEmpty {
             tasks.remove(at: selectedRow)
         }
         table.reloadData()
         save()
     }
     
-    //MARK:- Adding tasks to the table
+    // MARK: - Adding tasks to the table
     @objc func addNote() {
-        if table.isEditing{
+        if table.isEditing {
             return
         }
         let name: String = ""
         tasks.insert(name, at: 0)
-        let indexPath:IndexPath = IndexPath(row: 0, section: 0)
+        let indexPath: IndexPath = IndexPath(row: 0, section: 0)
         table.insertRows(at: [indexPath], with: .automatic)
         table.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
     
-    //MARK:-Datasource
+    // MARK: - Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
@@ -65,31 +65,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    //MARK:-TableView Delegate
+    // MARK: - TableView Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "detail", sender: nil)
     }
-    //MARK:- Prepare for segue
+    // MARK: - Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailView:DetailViewController = segue.destination as! DetailViewController
+        let detailView: DetailViewController = segue.destination as! DetailViewController
         selectedRow = table.indexPathForSelectedRow!.row
-        detailView.masterView = self
+        detailView.mainView = self
         detailView.setText(textv: tasks[selectedRow])
     }
     
-    //MARK:-Setting Editing
+    // MARK: - Setting Editing
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: animated)
     }
-    //MARK:-Deleting a task from the table
+    // MARK: - Deleting a task from the table
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         tasks.remove(at: indexPath.row)
         table.deleteRows(at: [indexPath], with: .fade)
         save()
     }
     
-    //MARK:- Saving to UserDefaults
+    // MARK: - Saving to UserDefaults
     func  save() {
         UserDefaults.standard.setValue(tasks, forKey: "todo")
     }

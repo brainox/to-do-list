@@ -10,13 +10,12 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     
-    var text:String = ""
-    var masterView: ViewController!
+    var text: String = ""
+    var mainView: ViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "To-Do Details"
-//        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .never
         textView.text = text
         
@@ -34,10 +33,10 @@ class DetailViewController: UIViewController {
         }
     }
     
-    //MARK:- ViewWillDisappear
+    // MARK: - ViewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        masterView.newRowText = textView.text
+        mainView.newRowText = textView.text
         textView.resignFirstResponder()
     }
 }
